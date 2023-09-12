@@ -1,4 +1,4 @@
-package ru.kpfu.itis.gr201.ponomarev.net;
+package ru.kpfu.itis.gr201.ponomarev.net.client;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -28,21 +28,21 @@ public class HttpClientImpl implements HttpClient {
         try {
             System.out.println(http.get("https://gorest.co.in/public/v2/users", null));
 
-            System.out.println(http.get("https://gorest.co.in/public/v2/users/5114483", null));
-
+//            System.out.println(http.get("https://gorest.co.in/public/v2/users/5114483", null));
+//
             Map<String, Object> user = new HashMap<>();
-            user.put("name", "lolololololololol kek");
-            user.put("email", "sometestemail@example.com");
+            user.put("name", "lolololololol kek");
+            user.put("email", "sometesteail@example.com");
             user.put("gender", "male");
             user.put("status", "inactive");
             System.out.println(http.post("https://gorest.co.in/public/v2/users", user));
-
-            Map<String, Object> update = new HashMap<>();
-            update.put("name", "name");
-            update.put("gender", "female");
-            System.out.println(http.put("https://gorest.co.in/public/v2/users/5115480", update));
-
-            System.out.println(http.delete("https://gorest.co.in/public/v2/users/5115480", null));
+//
+//            Map<String, Object> update = new HashMap<>();
+//            update.put("name", "name");
+//            update.put("gender", "female");
+//            System.out.println(http.put("https://gorest.co.in/public/v2/users/5115480", update));
+//
+//            System.out.println(http.delete("https://gorest.co.in/public/v2/users/5115480", null));
         } catch (IOException e) {
             System.err.println("An error occurred: " + e.getMessage());
         }

@@ -1,4 +1,4 @@
-package ru.kpfu.itis.gr201.ponomarev.net;
+package ru.kpfu.itis.gr201.ponomarev.net.client;
 
 import java.io.IOException;
 import java.util.Map;
