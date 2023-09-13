@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.stream.Collectors;
 
@@ -18,7 +19,7 @@ public class HelloServlet extends HttpServlet {
         System.out.println("START OF REQUEST");
 
         System.out.println("PARAMETERS:");
-        req.getParameterMap().forEach((key, value) -> System.out.println(key + "=" + value));
+        req.getParameterMap().forEach((key, value) -> System.out.println(key + "=" + paramValuesToString(value)));
 
         System.out.println("HEADERS:");
         Enumeration<String> e = req.getHeaderNames();
@@ -32,6 +33,12 @@ public class HelloServlet extends HttpServlet {
         System.out.println(body);
 
         System.out.println("END OF REQUEST");
+    }
+
+    private String paramValuesToString(String[] values) {
+        if (values.length == 0) return "";
+        else if (values.length == 1) return values[0];
+        else return Arrays.toString(values);
     }
 
     @Override
