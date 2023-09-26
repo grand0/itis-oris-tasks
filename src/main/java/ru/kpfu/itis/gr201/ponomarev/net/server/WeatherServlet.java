@@ -27,6 +27,8 @@ public class WeatherServlet extends HttpServlet {
         if (req.getParameter("city") == null) {
             resp.sendRedirect("/");
         } else {
+            long reqStart = System.nanoTime();
+
             HttpClient http = new HttpClientImpl();
             String jsonResponse;
             try {
@@ -49,7 +51,10 @@ public class WeatherServlet extends HttpServlet {
 
             WeatherDto weather = new WeatherDto(name, temp, humidity, weatherDescription);
 
-            LOGGER.info("User {} requested weather for {} at {}", req.getSession().getAttribute("username"), name, LocalDateTime.now());
+            long nanoTimeTook = System.nanoTime() - reqStart;
+            double millis = nanoTimeTook / 1e6;
+
+            LOGGER.info("User {} requested weather for {} at {} (took {} ms)", req.getSession().getAttribute("username"), name, LocalDateTime.now(), millis);
 
             req.setAttribute("weather", weather);
             req.getRequestDispatcher("weather.ftl").forward(req, resp);
