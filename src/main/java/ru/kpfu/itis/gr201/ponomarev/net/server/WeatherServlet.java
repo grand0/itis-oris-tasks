@@ -1,8 +1,11 @@
 package ru.kpfu.itis.gr201.ponomarev.net.server;
 
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.kpfu.itis.gr201.ponomarev.net.client.HttpClient;
 import ru.kpfu.itis.gr201.ponomarev.net.client.HttpClientImpl;
+import ru.kpfu.itis.gr201.ponomarev.net.dto.WeatherDto;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,14 +14,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 @WebServlet(name = "weatherServlet", urlPatterns = "/weather")
 public class WeatherServlet extends HttpServlet {
     public static final String API_KEY = "71cff1300f38b123a2136622174ebe23";
 
+    public static final Logger LOGGER = LoggerFactory.getLogger(WeatherServlet.class);
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (req.getSession(false) == null || req.getParameter("city") == null) {
+        if (req.getParameter("city") == null) {
             resp.sendRedirect("/");
         } else {
             HttpClient http = new HttpClientImpl();
@@ -41,10 +47,11 @@ public class WeatherServlet extends HttpServlet {
             double humidity = obj.getJSONObject("main").getDouble("humidity");
             String weatherDescription = obj.getJSONArray("weather").getJSONObject(0).getString("description");
 
-            req.setAttribute("city", name);
-            req.setAttribute("temp", temp);
-            req.setAttribute("humidity", humidity);
-            req.setAttribute("weatherDescription", weatherDescription);
+            WeatherDto weather = new WeatherDto(name, temp, humidity, weatherDescription);
+
+            LOGGER.info("User {} requested weather for {} at {}", req.getSession().getAttribute("username"), name, LocalDateTime.now());
+
+            req.setAttribute("weather", weather);
             req.getRequestDispatcher("weather.ftl").forward(req, resp);
         }
     }

@@ -1,5 +1,8 @@
 package ru.kpfu.itis.gr201.ponomarev.net.server;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
@@ -9,6 +12,8 @@ import java.io.IOException;
 public class AuthServlet extends HttpServlet {
     public static final String LOGIN = "root";
     public static final String PASSWORD = "toor";
+
+    public static final Logger LOGGER = LoggerFactory.getLogger(AuthServlet.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -29,6 +34,8 @@ public class AuthServlet extends HttpServlet {
         String password = req.getParameter("password");
 
         if (login.equals(LOGIN) && password.equals(PASSWORD)) {
+            LOGGER.info("User {} logged in", login);
+
             HttpSession session = req.getSession();
             session.setAttribute("username", login);
             session.setMaxInactiveInterval(60 * 60);
