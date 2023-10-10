@@ -56,8 +56,10 @@ public class WeatherServlet extends HttpServlet {
 
             LOGGER.info("User {} requested weather for {} at {} (took {} ms)", req.getSession().getAttribute("username"), name, LocalDateTime.now(), millis);
 
-            req.setAttribute("weather", weather);
-            req.getRequestDispatcher("weather.ftl").forward(req, resp);
+            resp.setContentType("text/plain");
+            resp.getWriter().write(weather.toString());
+//            req.setAttribute("weather", weather);
+//            req.getRequestDispatcher("weather.ftl").forward(req, resp);
         }
     }
 }

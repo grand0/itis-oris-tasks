@@ -2,6 +2,9 @@
 <head>
     <meta charset="UTF-8">
     <title><@title/></title>
+    <#if linkJquery??>
+        <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    </#if>
 </head>
 <body>
 <header>

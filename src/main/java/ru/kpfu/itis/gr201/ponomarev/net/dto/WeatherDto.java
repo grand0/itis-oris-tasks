@@ -28,4 +28,12 @@ public class WeatherDto {
     public String getDescription() {
         return description;
     }
+
+    @Override
+    public String toString() {
+        return "City: " + city + "\n" +
+                "Temperature: " + temp + "C\n" +
+                "Humidity: " + humidity + "%\n" +
+                "Description: " + description;
+    }
 }
